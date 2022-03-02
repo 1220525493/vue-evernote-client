@@ -2,8 +2,8 @@
   <div id="notebook-list">
     <h1>{{msg}}</h1>
     <ul>
-      <li><router-link to ="/note/1"></router-link></li>
-      <li><router-link to ="/note/2"></router-link></li>
+      <li><router-link to ="/note/1">笔记本一</router-link></li>
+      <li><router-link to ="/note/2">笔记本2</router-link></li>
     </ul>
   </div>
 </template>
