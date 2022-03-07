@@ -31,6 +31,14 @@
 </template>
 
 <script>
+import request from "../helpers/request";
+request('/auth/login','POST',{username:'hunger',password:'123456'}).then(data=>{
+  console.log(data);
+})
+
+
+
+
 export default {
   data() {
     return {
@@ -149,7 +157,7 @@ export default {
         border-bottom: 1px solid #eee;
       }
     }
-
+   d
     .button {
       background-color: #2bb964;
       height: 36px;
