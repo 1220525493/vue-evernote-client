@@ -1,10 +1,10 @@
 import  axios from 'axios'
-import {promise} from "ora";
-import {resolve} from "../../build/webpack.base.conf";
+import baseURLConfig from './config-baseURL'
+
 
 axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'
-axios.defaults.baseURL='http://note-server.hunger-valley.com'
-
+axios.defaults.baseURL=baseURLConfig.baseURL
+axios.defaults.withCredentials=true
 export default function request(url,type='GET',data = {}){
   return new Promise((resolve,reject)=>{
      let option = {

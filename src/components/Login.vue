@@ -10,7 +10,7 @@
               <div v-bind:class="{show:isShowRegister}" class="register">
                 <input type="text" v-model="register.username" placeholder="用户名">
                 <input type="password" v-model="register.password" @keydown.enter="onRegister" placeholder="密码">
-                <p v-bind:class="{error: register.isError}"> {{ register.notice }}</p>
+                <p v-bind:class="{error: register.isError}"> {{register.notice}}</p>
                 <div class="button" @click="onRegister">注册</div>
               </div>
             </transition>
@@ -18,8 +18,8 @@
             <transition name="slide">
               <div v-bind:class="{show:isShowLogin}" class="login">
                 <input type="text" v-model="login.username" placeholder="输入用户名">
-                <input type="password" v-model="login.username" @keyup.enter="onLogin" placeholder="密码">
-                <p v-bind:class="{error: login.isError}"> {{ login.notice }}</p>
+                <input type="password" v-model="login.password" @keyup.enter="onLogin" placeholder="密码">
+                <p v-bind:class="{error: login.isError}"> {{login.notice}}</p>
                 <div class="button" @click="onLogin">登录</div>
               </div>
             </transition>
@@ -31,12 +31,10 @@
 </template>
 
 <script>
-import request from "../helpers/request";
-request('/auth/login','POST',{username:'hunger',password:'123456'}).then(data=>{
+import Auth from '../apis/auth'
+Auth.getInfo().then(data=>{
   console.log(data);
 })
-
-
 
 
 export default {
@@ -81,6 +79,9 @@ export default {
       this.register.isError = false
       this.register.notice = ''
       console.log(`start register..., username: ${this.register.username} , password: ${this.register.password}`)
+      Auth.register({username:this.register.username,password:this.register.password}).then(data=>{
+        console.log(data)
+      })
     },
     onLogin() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
@@ -95,9 +96,13 @@ export default {
       }
       this.login.isError = false
       this.login.notice = ''
-
       console.log(`start login..., username: ${this.login.username} , password: ${this.login.password}`)
+      Auth.login({username:this.login.username,password:this.login.password}).then(data=>{
+        console.log(data)
+      })
     }
+
+
   }
 
 
@@ -105,7 +110,6 @@ export default {
 </script>
 
 <style lang="less">
-
 .modal-mask {
   position: fixed;
   z-index: 100;
@@ -117,12 +121,10 @@ export default {
   display: table;
   transition: opacity .3s ease;
 }
-
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-
 .modal-container {
   width: 800px;
   height: 500px;
@@ -133,18 +135,15 @@ export default {
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
   display: flex;
-
   .main {
     flex: 1;
     background: #36bc64 url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center no-repeat;
     background-size: contain;
   }
-
   .form {
     width: 270px;
     border-left: 1px solid #ccc;
     overflow: hidden;
-
     h3 {
       padding: 10px 20px;
       margin-top: -1px;
@@ -152,12 +151,10 @@ export default {
       font-size: 16px;
       border-top: 1px solid #eee;
       cursor: pointer;
-
-      &:nth-of-type(2) {
+      &:nth-of-type(2){
         border-bottom: 1px solid #eee;
       }
     }
-   d
     .button {
       background-color: #2bb964;
       height: 36px;
@@ -169,18 +166,15 @@ export default {
       margin-top: 18px;
       cursor: pointer;
     }
-
-    .login, .register {
+    .login,.register {
       padding: 0px 20px;
       border-top: 1px solid #eee;
       height: 0;
       overflow: hidden;
       transition: height .4s;
-
       &.show {
         height: 193px;
       }
-
       input {
         display: block;
         width: 100%;
@@ -193,27 +187,21 @@ export default {
         font-size: 14px;
         margin-top: 10px;
       }
-
       input:focus {
         border: 3px solid #9dcaf8;
       }
-
       p {
         font-size: 12px;
         margin-top: 10px;
         color: #444;
       }
-
       .error {
         color: red;
       }
     }
-
     .login {
       border-top: 0;
     }
   }
 }
-
-
 </style>
