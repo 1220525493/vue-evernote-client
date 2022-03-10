@@ -44,8 +44,8 @@ export default {
       isShowLogin: true,
       isShowRegister: false,
       login: {
-        username: '',
-        password: '',
+        username: 'wencan123',
+        password: '123456789',
         notice: '输入用户名和密码',
         isError: false
       },
